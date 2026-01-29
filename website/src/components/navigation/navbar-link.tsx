@@ -16,6 +16,7 @@ export const NavbarLink = (props: Props) => {
   return (
     <NextLink
       href={href}
+      prefetch={false}
       aria-current={isActive ? 'page' : undefined}
       data-active={isActive ? '' : undefined}
       className={cx(

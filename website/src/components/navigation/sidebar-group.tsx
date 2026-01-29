@@ -76,7 +76,7 @@ export const SidebarGroup = (props: Props) => {
             className={classNames.item}
             aria-current={pathname === doc.href ? 'page' : undefined}
           >
-            <NextLink href={doc.href} className={classNames.link}>
+            <NextLink href={doc.href} className={classNames.link} prefetch={false}>
               {doc.title}
             </NextLink>
           </li>
