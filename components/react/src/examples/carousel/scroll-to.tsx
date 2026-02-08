@@ -1,5 +1,5 @@
 'use client'
-import { useCarouselContext } from '@ark-ui/react'
+import { useCarouselContext } from '@ark-ui/react/carousel'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { Center } from 'styled-system/jsx'
 import { Button, Carousel, IconButton, Text } from '@/components/ui'
