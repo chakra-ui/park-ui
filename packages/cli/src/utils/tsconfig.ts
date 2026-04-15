@@ -1,3 +1,4 @@
+import path from 'node:path'
 import * as p from '@clack/prompts'
 import { Context, Effect, Layer, Schema } from 'effect'
 import { parse } from 'tsconfck'
@@ -6,7 +7,7 @@ import { PandaConfig } from './panda-config'
 
 const TSConfigSchema = Schema.Struct({
   compilerOptions: Schema.Struct({
-    baseUrl: Schema.String,
+    baseUrl: Schema.optional(Schema.String),
     paths: Schema.Record({
       key: Schema.String,
       value: Schema.mutable(Schema.Array(Schema.String)),
@@ -29,14 +30,18 @@ const getConfig = PandaConfig.pipe(
       catch: () => TSConfigNotFound(process.cwd()),
     }),
   ),
-  Effect.flatMap((config) => Schema.decodeUnknown(TSConfigSchema)(config.tsconfig)),
-  Effect.flatMap((config) => {
+  Effect.flatMap((parsed) =>
+    Schema.decodeUnknown(TSConfigSchema)(parsed.tsconfig).pipe(
+      Effect.map((config) => ({ config, tsconfigFile: parsed.tsconfigFile })),
+    ),
+  ),
+  Effect.flatMap(({ config, tsconfigFile }) => {
     const aliasPrefix = getTsConfigAliasPrefix(config)
     if (!aliasPrefix) return Effect.fail(TSConfigInvalid())
 
     return Effect.succeed({
       aliasPrefix,
-      baseUrl: config.compilerOptions?.baseUrl || '',
+      baseUrl: config.compilerOptions?.baseUrl ?? path.dirname(tsconfigFile),
       paths: config.compilerOptions?.paths || {},
     })
   }),
@@ -59,11 +64,16 @@ const getTsConfigAliasPrefix = (tsConfig: TSConfigSchema): string | null => {
   const paths = tsConfig.compilerOptions.paths
   const commonPaths = ['./*', './src/*', './app/*', './resources/js/*']
 
-  for (const [alias, pathList] of Object.entries(paths)) {
+  // Exclude the "*": ["./*"] catch-all used as a baseUrl replacement for bare imports (e.g. "styled-system"); it is not a user alias.
+  const aliasEntries = Object.entries(paths).filter(
+    ([alias]) => alias !== '*' && alias.endsWith('/*'),
+  )
+
+  for (const [alias, pathList] of aliasEntries) {
     if (pathList.some((p) => commonPaths.includes(p))) {
       return alias.replace(/\/\*$/, '')
     }
   }
 
-  return Object.keys(paths)[0]?.replace(/\/\*$/, '') ?? null
+  return aliasEntries[0]?.[0].replace(/\/\*$/, '') ?? null
 }
