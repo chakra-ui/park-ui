@@ -3,7 +3,7 @@ import { FileIcon, XIcon } from 'lucide-solid'
 import { type ComponentProps, createMemo, For, Show, splitProps } from 'solid-js'
 import { createStyleContext, type HTMLStyledProps, Stack } from 'styled-system/jsx'
 import { fileUpload } from 'styled-system/recipes'
-import { Span } from '@/components/ui'
+import { Span } from './span'
 
 const { withProvider, withContext } = createStyleContext(fileUpload)
 

@@ -4,7 +4,7 @@ import { FileIcon, XIcon } from 'lucide-react'
 import { type ComponentProps, forwardRef, useMemo } from 'react'
 import { createStyleContext, type HTMLStyledProps, Stack } from 'styled-system/jsx'
 import { fileUpload } from 'styled-system/recipes'
-import { Span } from '@/components/ui'
+import { Span } from './span'
 
 const { withProvider, withContext } = createStyleContext(fileUpload)
 
