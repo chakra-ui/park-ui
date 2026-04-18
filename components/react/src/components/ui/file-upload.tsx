@@ -87,11 +87,12 @@ export const FileText = forwardRef<HTMLSpanElement, FileTextProps>(
     const acceptedFiles = fileUpload.acceptedFiles
 
     const fileText = useMemo(() => {
-      if (acceptedFiles.length === 1) {
-        return acceptedFiles[0].name
-      }
       if (acceptedFiles.length > 1) {
         return `${acceptedFiles.length} files`
+      }
+      const [first] = acceptedFiles
+      if (first) {
+        return first.name
       }
       return fallback
     }, [acceptedFiles, fallback])

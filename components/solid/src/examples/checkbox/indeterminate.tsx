@@ -37,8 +37,9 @@ export const App = () => {
             onCheckedChange={(e) =>
               setValues((current) => {
                 const newValues = [...current]
-                if (!newValues[index()]) return newValues
-                newValues[index()] = { ...newValues[index()], checked: !!e.checked }
+                const target = newValues[index()]
+                if (!target) return newValues
+                newValues[index()] = { ...target, checked: !!e.checked }
                 return newValues
               })
             }

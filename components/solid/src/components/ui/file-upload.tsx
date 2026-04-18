@@ -90,11 +90,12 @@ export const FileText = (props: FileTextProps) => {
 
   const fileText = createMemo(() => {
     const files = acceptedFiles()
-    if (files.length === 1) {
-      return files[0].name
-    }
     if (files.length > 1) {
       return `${files.length} files`
+    }
+    const [first] = files
+    if (first) {
+      return first.name
     }
     return fallback()
   })
