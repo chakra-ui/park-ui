@@ -31,9 +31,7 @@ const Indicator = (props: IconProps) => {
   return (
     <Show when={StatusIcon()}>
       {(Icon_) => (
-        <Icon data-type={toast().type} {...props}>
-          <Icon_ />
-        </Icon>
+        <Icon data-type={toast().type} asChild={Icon_()} {...props} />
       )}
     </Show>
   )
