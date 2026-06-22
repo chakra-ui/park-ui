@@ -50,7 +50,7 @@ export const install = ({ panda, files = [] }: RegistryItem) =>
               }
               if (file.type === 'registry:recipe' && file.imports) {
                 return updateRecipeIndex(join(resolvedPaths.recipes, 'index.ts'), {
-                  type: file.content.includes('slotRecipe') ? 'slotRecipe' : 'recipe',
+                  type: file.content.includes('defineSlotRecipe') ? 'slotRecipe' : 'recipe',
                   imports: file.imports,
                 })
               }
