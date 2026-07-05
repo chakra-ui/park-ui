@@ -1,3 +1,4 @@
+import type { PolymorphicProps } from '@ark-ui/solid'
 import { Tooltip as ArkTooltip } from '@ark-ui/solid/tooltip'
 import { type ComponentProps, type JSX, Show, splitProps } from 'solid-js'
 import { Portal } from 'solid-js/web'
@@ -19,11 +20,13 @@ const Trigger = withContext(ArkTooltip.Trigger, 'trigger')
 
 export { TooltipContext as Context } from '@ark-ui/solid/tooltip'
 
-export interface TooltipProps extends Omit<RootProps, 'content'> {
+type TriggerRenderProp = PolymorphicProps<'button'>['asChild']
+
+export interface TooltipProps extends Omit<RootProps, 'content' | 'children'> {
   showArrow?: boolean
   portalled?: boolean
   portalRef?: HTMLElement | undefined
-  children: JSX.Element | undefined
+  children: TriggerRenderProp | JSX.Element | undefined
   content: JSX.Element | string
   contentProps?: ContentProps
   disabled?: boolean
@@ -42,10 +45,15 @@ export const Tooltip = (props: TooltipProps) => {
 
   const portalled = () => local.portalled ?? true
 
+  const asRenderProp = () => (typeof local.children === 'function' ? local.children : false)
+
   return (
-    <Show when={!local.disabled} fallback={local.children}>
+    <Show when={!local.disabled} fallback={local.children as JSX.Element}>
       <Root {...rootProps}>
-        <Trigger>{local.children}</Trigger>
+        <Show when={asRenderProp()} fallback={<Trigger>{local.children as JSX.Element}</Trigger>}>
+          {(renderFn) => <Trigger asChild={renderFn()} />}
+        </Show>
+
         <Show
           when={portalled()}
           fallback={
