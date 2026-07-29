@@ -594,5 +594,9 @@
   {
     "name": "yellow",
     "type": "registry:color"
+  },
+  {
+    "name": "__init",
+    "type": "registry:theme"
   }
 ]

@@ -196,7 +196,8 @@ export const generateRegistry = async (options: { name: string; pattern?: string
   const framework: Framework = options.name.includes('solid') ? 'solid' : 'react'
 
   const files = await fg(pattern, {
-    ignore: ['**/*.test.tsx', '**/*.spec.tsx', '**/index.ts'],
+    // index.tsx is a barrel file, and an item named "index" would publish over index.json
+    ignore: ['**/*.test.tsx', '**/*.spec.tsx', '**/index.ts', '**/index.tsx'],
   })
 
   const items: RegistryItemPartial[] = []

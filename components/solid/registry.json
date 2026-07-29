@@ -676,17 +676,6 @@
       ]
     },
     {
-      "name": "index",
-      "type": "registry:ui",
-      "dependencies": ["@ark-ui/solid"],
-      "files": [
-        {
-          "path": "src/components/ui/index.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "input",
       "type": "registry:ui",
       "dependencies": ["@ark-ui/solid", "solid-js"],
