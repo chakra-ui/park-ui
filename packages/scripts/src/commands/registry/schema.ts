@@ -80,6 +80,14 @@ export const registryItem = registryItemBase.extend({
 export type RegistryItemPartial = z.infer<typeof registryItemPartial>
 export type RegistryItem = z.infer<typeof registryItem>
 
+const registryIndexItem = z.object({
+  name: z.string(),
+  type: registryItemType,
+})
+export type RegistryIndexItem = z.infer<typeof registryIndexItem>
+
+export const registryIndexList = z.array(registryIndexItem)
+
 const registry = z.object({
   $schema: z.url(),
   name: z.string(),

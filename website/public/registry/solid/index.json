@@ -352,10 +352,6 @@
     "type": "registry:ui"
   },
   {
-    "name": "index",
-    "type": "registry:ui"
-  },
-  {
     "name": "input",
     "type": "registry:ui"
   },
