@@ -5,7 +5,7 @@
   "dependencies": ["@ark-ui/react", "react"],
   "files": [
     {
-      "content": "import { ark } from '@ark-ui/react'\nimport type { ComponentProps } from 'react'\nimport { styled } from 'styled-system/jsx'\nimport { group } from 'styled-system/recipes'\n\nexport type GroupProps = ComponentProps<typeof Group>\nexport const Group = styled(ark.div, group)\n",
+      "content": "import { ark } from '@ark-ui/react/factory'\nimport type { ComponentProps } from 'react'\nimport { styled } from 'styled-system/jsx'\nimport { group } from 'styled-system/recipes'\n\nexport type GroupProps = ComponentProps<typeof Group>\nexport const Group = styled(ark.div, group)\n",
       "type": "registry:ui",
       "path": "group.tsx",
       "exports": "export { Group, type GroupProps } from './group'"
